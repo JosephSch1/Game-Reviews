@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<title>Create Account</title>
+<link href="/css/style.css" rel="stylesheet" />
+</head>
+<body>
+<nav>
+			<div>
+				<a>Game Reviews!</a> 
+			</div>
+		</nav>
+	
+		<div>
+	<h1>Create Your Account</h1>
+
+	<form action="" method="post">
+	
+	 <input id="csrf.token" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+	 	
+	 	<label>Username:</label>
+	 	<div>
+	 		<input type="text" th:field="${user.userName}" />
+	 	</div>
+	 	<label>Email:</label>
+	 	<div>
+	 		<input type="text" th:field="${user.email}" />
+	 	</div>
+	 	<label>Password:</label>
+	 	<div>
+	 		<input type="password" th:field="${user.password}" />
+	 	</div>
+	 	
+
+<!-- get info on if the user is a regular user or a critic  -->
+		<div>
+			<input type="submit" value="Create Account" />
+		</div>
+<a href="/login">Back</a>
+	</form>
+	</div>
+	
+</body>
+</html>
