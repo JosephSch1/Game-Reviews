@@ -2,6 +2,7 @@ package com.coderscampus.gamereviews.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -13,6 +14,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -26,8 +30,11 @@ public class User {
 	private String password;
 	private List<Post> posts = new ArrayList<>();
 	private List<Game> games = new ArrayList<>();
-	private Collection<Role> roles;
-
+	private Set<Authorities> authorities = new HashSet<>();
+	
+	public User() {
+		
+	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getUserId() {
@@ -40,7 +47,7 @@ public class User {
 
 	@Column(name = "user_name")
 	public String getUserName() {
-		return userName;
+		return this.userName;
 	}
 
 	public void setUserName(String userName) {
@@ -56,7 +63,7 @@ public class User {
 	}
 
 	public String getPassword() {
-		return password;
+		return this.password;
 	}
 
 	public void setPassword(String password) {
@@ -77,17 +84,20 @@ public class User {
 		return games;
 	}
 
-	public void setGames(List<Game> games) {
-		this.games = games;
+	public void setGames(List<Game> game) {
+		this.games = game;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
-	public Collection<Role> getRoles() {
-		return roles;
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "users_roles", 
+			  joinColumns = @JoinColumn(name = "user_id"),
+			  inverseJoinColumns = @JoinColumn(name = "role_id"))
+	public Set<Authorities> getRoles() {
+		return authorities;
 	}
 
-	public void setRoles(Collection<Role> collection) {
-		this.roles = collection;
+	public void setRoles(Set<Authorities> authorities) {
+		this.authorities = authorities;
 	}
 
 	@Override

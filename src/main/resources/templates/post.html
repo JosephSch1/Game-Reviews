@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://thymeleaf.org">
 	<head>
-		<title>Post a Game</title>
+		<title>Post a review</title>
 	</head>
 
 	<body>
@@ -15,6 +15,23 @@
 				</form>
 			</div>
 		</nav>
+		
+			<div>
+		<form action="" method="post">
+	
+	 <input id="csrf.token" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+	 	
+	 	<label>Review This Game:</label>
+	 	<div>
+	 		<textarea rows="4" cols="50" th:field="${post.review}" />
+	 	</div>
+	 	
+		<div>
+			<input type="submit" value="Submit review" />
+		</div>
+	</form>
+	</div>
+
 	</body>
 
 </html>

@@ -16,8 +16,6 @@ import javax.persistence.Table;
 public class Post {
 	
 	private Long postId;
-	private Integer score;
-	private User user;
 	private Game game;
 	private String review;
 	
@@ -29,25 +27,7 @@ public class Post {
 	public void setPostId(Long postId) {
 		this.postId = postId;
 	}
-	
-	public Integer getScore() {
-		return score;
-	}
-	public void setScore(Integer score) {
-		this.score = score;
-	}
-	public void setReleaseDate(Integer releaseDate) {
-		this.score = releaseDate;
-	}
-	
-	@ManyToOne
-	@JoinColumn(name = "user_id")
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
+
 	public String getReview() {
 		return review;
 	}

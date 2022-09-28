@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.coderscampus.gamereviews.domain.Authorities;
 import com.coderscampus.gamereviews.domain.Post;
-import com.coderscampus.gamereviews.domain.Role;
 import com.coderscampus.gamereviews.domain.User;
 import com.coderscampus.gamereviews.repository.PostRepository;
 import com.coderscampus.gamereviews.repository.RoleRepository;
@@ -25,29 +25,26 @@ public class UserService {
 	@Autowired
 	private PostRepository postRepo;
 
-	public void CreateUser(User user) {
-		Role role = new Role();
-		role.setUser(user);
-		role.setAuthority("USER");
-		
-		String encodedPassword = passwordEncoder.encode(user.getPassword());
-		user.setPassword(encodedPassword);
-		userRepo.save(user);
-		roleRepo.save(role);
+	public void createUser(User user) {
+			encodePassword(user);
+			Authorities authority = new Authorities();
+			authority.setUser(user);
+			authority.setAuthority("USER");
+			
+			userRepo.save(user);
+			roleRepo.save(authority);
 	}
-	
+
 	public void updateUserProfile(User user) {
-		
 		userRepo.save(user);
 	}
-	
+
 	public User findByUserId(Long id) {
 		return userRepo.findByUserId(id);
 	}
-	
-	public Optional<User> findByUserPost(Long postId) {
-		Post post = postRepo.findByPostId(postId);
-		Optional<User> user = userRepo.findById(post.getUser().getUserId());
-		return user;
+
+	public void encodePassword(User user) {
+		String encodedPassword = passwordEncoder.encode(user.getPassword());
+		user.setPassword(encodedPassword);
 	}
 }

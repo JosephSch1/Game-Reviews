@@ -1,14 +1,17 @@
 package com.coderscampus.gamereviews.domain;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -19,7 +22,7 @@ public class Game {
 	private String genre;
 	private String description;
 	private LocalDateTime releaseDate;
-	private Post post;
+	private List<Post> post;
 	private User user;
 
 	@Id
@@ -64,13 +67,12 @@ public class Game {
 		this.releaseDate = releaseDate;
 	}
 	
-	@ManyToOne
-	@JoinColumn(name = "post_id")
-	public Post getPost() {
+	@OneToMany(mappedBy="game", cascade = CascadeType.ALL, orphanRemoval = true)
+	public List<Post> getPost() {
 		return post;
 	}
 
-	public void setPost(Post post) {
+	public void setPost(List<Post> post) {
 		this.post = post;
 	}
 

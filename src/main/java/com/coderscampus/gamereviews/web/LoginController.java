@@ -31,9 +31,9 @@ public class LoginController {
 	
 	@PostMapping("/register")
 	public String createUser(User user) {
-		userService.CreateUser(user);
+		userService.createUser(user);
 		
-		System.out.println(user.getUserName());
+		System.out.println(user.getPassword());
 		return "redirect:/login";
 	}
 }

@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://thymeleaf.org">
+<head>
+<title>Post a review</title>
+</head>
+
+<body>
+	<nav class="navbar">
+		<div>
+			Game Reviews! <a href="/dashboard">My Profile</a>
+			<form method="post" action="logout">
+				<input type="hidden" th:name="${_csrf.parameterName}"
+					th:value="${_csrf.token}" />
+				<button class="logout" type="submit">Logout</button>
+			</form>
+		</div>
+	</nav>
+
+	<div>
+		<table>
+			<tr>
+				<th>User Reviews:</th>
+			</tr>
+			<tr th:each="post : ${posts}">
+				<td th:text="${post.review}"></td>
+			</tr>
+		</table>
+	</div>
+
+
+</body>
+
+</html>

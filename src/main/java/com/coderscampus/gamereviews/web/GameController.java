@@ -20,16 +20,16 @@ public class GameController {
 	@Autowired
 	private UserService userService;
 	
-	@GetMapping("/game/{gameId}")
-	public String getOneGame(@PathVariable Long gameId, @AuthenticationPrincipal User user, ModelMap model) {
-		model.put("game", gameService.findById(gameId));
-		model.put("user", user);
+	@GetMapping("/createGame")
+	public String newGame(Game game, ModelMap model) {
+		model.put("game", game);
 		return "game";
 	}
-
+	
 	@PostMapping("/createGame")
-	public String newGame(@AuthenticationPrincipal User user, Game game) {
-		gameService.newGame(user, game);
-		return "redirect:/dashboard";
+	public String newGame(Game game) {
+		gameService.newGame(game);
+		return "game";
 	}
 }
+

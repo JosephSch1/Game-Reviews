@@ -8,10 +8,39 @@
 <div>
 	<nav>
 		<div>
-			<a href="#">Game Reviews</a>
+			<a href="/dashboard">Game Reviews</a>
 		</div>
 	</nav>
 	
+</div>
+
+<div>
+	<h1>Add a game to be reviewed!</h1>
+	<br><h2>Just enter the following details to post your game!</h2>
+	
+	<div>
+		<form action="" method="post">
+	
+	 <input id="csrf.token" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+	 	
+	 	<label>Title:</label>
+	 	<div>
+	 		<input type="text" th:field="${game.title}" />
+	 	</div>
+	 	<label>Genre:</label>
+	 	<div>
+	 		<input type="text" th:field="${game.genre}" />
+	 	</div>
+	 	<label>Description:</label>
+	 	<div>
+	 		<input type="text" th:field="${game.description}" />
+	 	</div>
+	 	
+		<div>
+			<input type="submit" value="Create game" />
+		</div>
+	</form>
+	</div>
 </div>
 </body>
 

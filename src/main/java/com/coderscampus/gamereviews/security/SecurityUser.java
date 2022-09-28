@@ -1,29 +1,40 @@
 package com.coderscampus.gamereviews.security;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.coderscampus.gamereviews.domain.Role;
+import com.coderscampus.gamereviews.domain.Authorities;
 import com.coderscampus.gamereviews.domain.User;
 
 public class SecurityUser extends User implements UserDetails {
 	
 
 	private static final long serialVersionUID = -6181706091746350146L;
+	private User user;
 
-	public SecurityUser() {
-	}
-
+	@Autowired
+	PasswordEncoder passwordEncoder;
+	
 	public SecurityUser(User user) {
-		this.setUserId(getUserId());
-		this.setEmail(getEmail());
-		this.setUserName(getUserName());
-		this.setPosts(getPosts());
-		this.setGames(getGames());
-		this.setRoles(getRoles());
+		this.user = user;
+	}
+	
+	@Override
+	public String getPassword() {
+		return user.getPassword();
+	}
+	
+	@Override
+	public String getUsername() {
+		return user.getUserName();
 	}
 
 	@Override
@@ -48,16 +59,15 @@ public class SecurityUser extends User implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return null;
+		Set<Authorities> authorities = user.getRoles();
+		
+		List<SimpleGrantedAuthority> auth = new ArrayList<>();
+		
+		for (Authorities authority : authorities) {
+			auth.add(new SimpleGrantedAuthority(authority.getAuthority()));
+		}
+				
+		return auth;
 	}
-
-	@Override
-	public String getPassword() {
-		return null;
-	}
-
-	@Override
-	public String getUsername() {
-		return null;
-	}
+	
 }
